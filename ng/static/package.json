@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nss-day-cohort-13/django-tutorial.git"
+    "url": "git+https://github.com/NewEvolution/django-angular.git"
   },
   "keywords": [
     "django",
@@ -17,9 +17,9 @@
   "author": "Ryan Tanay <rtanay@gmail.com> (http://portfolio.ryantanay.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nss-day-cohort-13/django-tutorial/issues"
+    "url": "https://github.com/NewEvolution/django-angular/issues"
   },
-  "homepage": "https://github.com/nss-day-cohort-13/django-tutorial#readme",
+  "homepage": "https://github.com/NewEvolution/django-angular#readme",
   "devDependencies": {
     "bower": "^1.7.9"
   }
