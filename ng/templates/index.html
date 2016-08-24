@@ -1,0 +1,60 @@
+{% load staticfiles %}
+
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>NSS Starter Kit - Angular Todo</title>
+
+</head>
+
+<body ng-app="TodoApp">
+
+  <section ng-controller="TodoCtrl">
+    <h1>((title))</h1>
+
+    <!-- //
+      Simple 2-way data binding that shows how the value of the input
+      field is immediately synched with the JavaScript variable, which
+      in turn immediately sets the HTML of the div below the input.
+    // -->
+    <div>
+      <input type="text" ng-model="macaroni" />
+      <div>((macaroni))</div>
+    </div>
+
+    <!-- //
+      Iterating over a collection in HTML rather than in JavaScript
+      with the ng-repeat directive.
+    // -->
+    <div>
+      <ul ng-repeat="todo in todos | filter: macaroni">
+        <li>((todo.name)) <button ng-click="killTodo(todo)">Finish</button></li>
+      </ul>
+    </div>
+
+    <!-- //
+      Use the ng-click directive to invoke a function defined in a
+      controller when a DOM element is clicked.
+    // -->
+    <div>
+      <input type="text" ng-model="newTodo">
+      <button ng-click="addTodo()">Create</button>
+    </div>
+
+    <div>
+      Grouped tasks:
+      <select
+          ng-model="theTodo"
+          ng-options="value.name group by value.type for value in todos">
+      </select>
+    </div>
+  </section>
+
+  <script src="{% static 'bower_components/angular/angular.min.js' %}"></script>
+
+  <script src="{% static 'app/app.js' %}"></script>
+  <script src="{% static 'app/controllers/Todo.js' %}"></script>
+</body>
+</html>

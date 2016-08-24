@@ -1,0 +1,7 @@
+<h1>Songs</h1>
+
+{% for song in songs.values %}
+    <div>
+      {{ song.name }} by {{ song.artist }} on the album {{ song.album.name }}
+    </div>
+{% endfor %}
