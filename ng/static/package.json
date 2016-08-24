@@ -1,0 +1,26 @@
+{
+  "name": "django-angular",
+  "version": "1.0.0",
+  "description": "\"NPM for tools for site development\"",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nss-day-cohort-13/django-tutorial.git"
+  },
+  "keywords": [
+    "django",
+    "angular"
+  ],
+  "author": "Ryan Tanay <rtanay@gmail.com> (http://portfolio.ryantanay.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nss-day-cohort-13/django-tutorial/issues"
+  },
+  "homepage": "https://github.com/nss-day-cohort-13/django-tutorial#readme",
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
+}
