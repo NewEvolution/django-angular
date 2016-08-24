@@ -1,4 +1,4 @@
-app.controller("TodoCtrl", function($scope) {
+app.controller("TodoCtrl", function($scope, $http) {
 
   $scope.title = "Welcome to Angular";
   $scope.macaroni = "";
@@ -12,6 +12,9 @@ app.controller("TodoCtrl", function($scope) {
     { name: "Install microservice observer", type: "work" },
     { name: "Schedule weekly scrum", type: "work" }
   ];
+
+  $http.get("http://localhost:8000/ng/todos")
+       .then((res) => $scope.remote_todos = res.data)
 
   $scope.killTodo = function(todo) {
     var todoIndex = $scope.todos.indexOf(todo);

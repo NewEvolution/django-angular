@@ -28,9 +28,17 @@
       Iterating over a collection in HTML rather than in JavaScript
       with the ng-repeat directive.
     // -->
+    <h3>Local Todos</h3>
     <div>
       <ul ng-repeat="todo in todos | filter: macaroni">
         <li>((todo.name)) <button ng-click="killTodo(todo)">Finish</button></li>
+      </ul>
+    </div>
+
+    <h3>Remote Todos</h3>
+    <div>
+      <ul ng-repeat="todo in remote_todos | filter: macaroni">
+        <li>((todo.fields.todo_text)) <button ng-click="killTodo(todo)">Finish</button></li>
       </ul>
     </div>
 
