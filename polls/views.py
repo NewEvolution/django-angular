@@ -17,7 +17,7 @@ class IndexView(generic.ListView):
         query = Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
-        return query.filter(choice__isnull=False)[:5]
+        return query.filter(choice__isnull=False).distinct()[:5]
 
 
 class DetailView(generic.DetailView):
@@ -32,7 +32,7 @@ class DetailView(generic.DetailView):
         query = Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
-        return query.filter(choice__isnull=False)
+        return query.filter(choice__isnull=False).distinct()
 
 
 class ResultsView(generic.DetailView):
@@ -47,7 +47,7 @@ class ResultsView(generic.DetailView):
         query = Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')
-        return query.filter(choice__isnull=False)
+        return query.filter(choice__isnull=False).distinct()
 
 
 def vote(request, question_id):
