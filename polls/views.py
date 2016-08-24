@@ -1,5 +1,6 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
+from django.utils import timezone
 from django.urls import reverse
 from django.views import generic
 
@@ -7,48 +8,62 @@ from .models import Choice, Question
 
 
 class IndexView(generic.ListView):
-  template_name = 'polls/index.html'
-  context_object_name = 'latest_question_list'
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
 
-  def get_queryset(self):
-    """Return the last five published questions."""
-    return Question.objects.order_by('-pub_date')[:5]
+    def get_queryset(self):
+        """Return the last 5 published questions (not including those set to be
+        published in the future and those with no choices)."""
+        query = Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
+        return query.filter(choice__isnull=False)[:5]
 
 
 class DetailView(generic.DetailView):
-  model = Question
-  template_name = 'polls/detail.html'
+    model = Question
+    template_name = 'polls/detail.html'
+
+    def get_queryset(self):
+        """
+        Excludes any questions that aren't published yet and those without any
+        choices.
+        """
+        query = Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
+        return query.filter(choice__isnull=False)
 
 
 class ResultsView(generic.DetailView):
-  model = Question
-  template_name = 'polls/results.html'
+    model = Question
+    template_name = 'polls/results.html'
 
-
-def songs(request):
-  song_response = requests.get('https://socks.firebaseio.com/songs.json')
-  songs = json.loads(song_response.text)
-  print(songs)
-  context = {'songs': songs}
-  return render(request, 'polls/songs.html', context)
+    def get_queryset(self):
+        """
+        Excludes any questions that aren't published yet and those without any
+        choices.
+        """
+        query = Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')
+        return query.filter(choice__isnull=False)
 
 
 def vote(request, question_id):
-  question = get_object_or_404(Question, pk=question_id)
-
-  try:
-    selected_choice = question.choice_set.get(pk=request.POST['choice'])
-  except (KeyError, Choice.DoesNotExist):
-    # Redisplay the question voting form.
-    return render(request, 'polls/detail.html', {
-      'question': question,
-      'error_message': "You didn't select a choice.",
-    })
-  else:
-    selected_choice.votes += 1
-    selected_choice.save()
-    # Always return an HttpResponseRedirect after successfully dealing
-    # with POST data. This prevents data from being posted twice if a
-    # user hits the Back button.
-    return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice."
+        })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button.
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
